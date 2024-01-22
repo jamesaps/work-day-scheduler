@@ -1,7 +1,7 @@
 var currentDayElement = $('#currentDay');
 
 var startOfWorkDay = dayjs('2000-01-01 09:00');
-var endOfWorkDay = dayjs('2000-01-01 17:00');
+var endOfWorkDay = dayjs('2000-01-01 22:00');
 
 var schedule = {};
 
@@ -65,25 +65,30 @@ function generateTimeblocks(fromTime, toTime) {
 }
 
 function createTimeblock(time) {
+    // create timeblock elements
     var row = $('<div class="row">');
     var hourElement = $('<div class="col-1 hour text-end pt-3">');
     var textAreaElement = $('<textarea class="col">');
     var saveButtonElement = $('<div class="col-1 saveBtn d-flex align-items-center justify-content-center">');
     var saveButtonIconElement = $('<i class="fas fa-save">');
 
+    // populate hour element and append to row
     var timeFormattedAsString = getHourAndDayPeriodFromTime(time);
     hourElement.text(timeFormattedAsString);
     row.append(hourElement);
 
+    // determine color of time block according to time in schedule relative to current time
     var tenseOfTimeblock = getTenseOfDateByHour(time);
     textAreaElement.addClass(tenseOfTimeblock);
 
+    // populate text area contents with pre-existing value from scheudle if it exists
     if (schedule[time.hour()] !== undefined) {
         textAreaElement.val(schedule[time.hour()]);
     }
 
     row.append(textAreaElement);
 
+    // add event listener to the save (functional) button element to perform save action on click
     saveButtonElement.on('click', function () {
         saveTimeblock(time.hour(), textAreaElement);
     });
@@ -91,6 +96,7 @@ function createTimeblock(time) {
     saveButtonElement.append(saveButtonIconElement);
     row.append(saveButtonElement);
 
+    // append time block row to the container
     $('.container').append(row);
 }
 
@@ -125,6 +131,7 @@ function saveTimeblock(hour, textAreaElement) {
 }
 
 function persistScheduleToLocalStorage() {
+    // covert schedule object to string for storage in localStorage
     var scheduleEncodedAsString = JSON.stringify(schedule);
 
     localStorage.setItem('schedule', scheduleEncodedAsString);
@@ -133,6 +140,7 @@ function persistScheduleToLocalStorage() {
 function loadSchedule() {
     var scheduleFromLocalStorage = localStorage.getItem('schedule');
 
+    // if schedule does not exist in user's local storage, terminate loading
     if (scheduleFromLocalStorage === null) {
         return;
     }
