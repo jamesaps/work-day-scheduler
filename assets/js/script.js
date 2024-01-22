@@ -32,3 +32,19 @@ function getOrdinalSuffix(number) {
 
     return 'th';
 }
+
+function createTimeblock(time) {
+    var row = $('<div class="row">');
+    var hourElement = $('<div class="col-1 hour text-end pt-3">');
+    var textAreaElement = $('<textarea class="col">');
+    var saveButtonElement = $('<div class="col-1 saveBtn d-flex align-items-center justify-content-center">');
+    var saveButtonIconElement = $('<i class="fas fa-save">');
+
+    row.append(hourElement);
+    row.append(textAreaElement);
+
+    saveButtonElement.append(saveButtonIconElement);
+    row.append(saveButtonElement);
+
+    $('.container').append(row);
+}
