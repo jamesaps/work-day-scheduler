@@ -40,6 +40,9 @@ function createTimeblock(time) {
     var saveButtonElement = $('<div class="col-1 saveBtn d-flex align-items-center justify-content-center">');
     var saveButtonIconElement = $('<i class="fas fa-save">');
 
+    var timeFormattedAsString = getHourAndDayPeriodFromTime(time);
+    hourElement.text(timeFormattedAsString);
+
     row.append(hourElement);
     row.append(textAreaElement);
 
@@ -48,3 +51,11 @@ function createTimeblock(time) {
 
     $('.container').append(row);
 }
+
+function getHourAndDayPeriodFromTime(time) {
+    // time is a dayjs() object
+
+    return time.format('hA');
+}
+
+createTimeblock(dayjs());
