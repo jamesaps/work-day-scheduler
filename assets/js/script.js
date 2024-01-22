@@ -3,6 +3,10 @@ var currentDayElement = $('#currentDay');
 var startOfWorkDay = dayjs('2000-01-01 09:00');
 var endOfWorkDay = dayjs('2000-01-01 17:00');
 
+var schedule = {};
+
+loadSchedule();
+
 displayCurrentDay();
 generateTimeblocks(startOfWorkDay, endOfWorkDay);
 
@@ -73,7 +77,16 @@ function createTimeblock(time) {
 
     var tenseOfTimeblock = getTenseOfDateByHour(time);
     textAreaElement.addClass(tenseOfTimeblock);
+
+    if (schedule[time.hour()] !== undefined) {
+        textAreaElement.val(schedule[time.hour()]);
+    }
+
     row.append(textAreaElement);
+
+    saveButtonElement.on('click', function () {
+        saveTimeblock(time.hour(), textAreaElement);
+    });
 
     saveButtonElement.append(saveButtonIconElement);
     row.append(saveButtonElement);
@@ -102,4 +115,27 @@ function getTenseOfDateByHour(time) {
     if (hourToTest > currentHour) {
         return 'future';
     }
+}
+
+function saveTimeblock(hour, textAreaElement) {
+    var textToSave = textAreaElement.val();
+    schedule[hour] = textToSave;
+
+    persistScheduleToLocalStorage();
+}
+
+function persistScheduleToLocalStorage() {
+    var scheduleEncodedAsString = JSON.stringify(schedule);
+
+    localStorage.setItem('schedule', scheduleEncodedAsString);
+}
+
+function loadSchedule() {
+    var scheduleFromLocalStorage = localStorage.getItem('schedule');
+
+    if (scheduleFromLocalStorage === null) {
+        return;
+    }
+
+    schedule = JSON.parse(scheduleFromLocalStorage);
 }
