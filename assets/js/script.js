@@ -77,6 +77,11 @@ function createTimeblock(time) {
 
     var tenseOfTimeblock = getTenseOfDateByHour(time);
     textAreaElement.addClass(tenseOfTimeblock);
+
+    if (schedule[time.hour()] !== undefined) {
+        textAreaElement.val(schedule[time.hour()]);
+    }
+
     row.append(textAreaElement);
 
     saveButtonElement.on('click', function () {
