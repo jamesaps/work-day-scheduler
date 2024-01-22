@@ -83,9 +83,9 @@ function generateTimeblocks(fromTime, toTime) {
 function createTimeblock(time) {
     // create timeblock elements
     var row = $('<div class="row">');
-    var hourElement = $('<div class="col-1 hour text-end pt-3">');
+    var hourElement = $('<div class="col-3 col-sm-2 col-md-1 hour text-end pt-3">');
     var textAreaElement = $('<textarea class="col">');
-    var saveButtonElement = $('<div class="col-1 saveBtn d-flex align-items-center justify-content-center">');
+    var saveButtonElement = $('<div class="col-3 col-sm-2 col-md-1 saveBtn d-flex align-items-center justify-content-center">');
     var saveButtonIconElement = $('<i class="fas fa-save">');
 
     // populate hour element and append to row
