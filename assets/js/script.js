@@ -3,6 +3,8 @@ var currentDayElement = $('#currentDay');
 var startOfWorkDay = dayjs('2000-01-01 09:00');
 var endOfWorkDay = dayjs('2000-01-01 17:00');
 
+var schedule = {};
+
 displayCurrentDay();
 generateTimeblocks(startOfWorkDay, endOfWorkDay);
 
@@ -110,4 +112,13 @@ function getTenseOfDateByHour(time) {
 
 function saveTimeblock(hour, textAreaElement) {
     var textToSave = textAreaElement.val();
+    schedule[hour] = textToSave;
+
+    persistScheduleToLocalStorage();
+}
+
+function persistScheduleToLocalStorage() {
+    var scheduleEncodedAsString = JSON.stringify(schedule);
+
+    localStorage.setItem('schedule', scheduleEncodedAsString);
 }
