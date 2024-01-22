@@ -75,6 +75,10 @@ function createTimeblock(time) {
     textAreaElement.addClass(tenseOfTimeblock);
     row.append(textAreaElement);
 
+    saveButtonElement.on('click', function () {
+        saveTimeblock(time.hour(), textAreaElement);
+    });
+
     saveButtonElement.append(saveButtonIconElement);
     row.append(saveButtonElement);
 
@@ -102,4 +106,8 @@ function getTenseOfDateByHour(time) {
     if (hourToTest > currentHour) {
         return 'future';
     }
+}
+
+function saveTimeblock(hour, textAreaElement) {
+    var textToSave = textAreaElement.val();
 }
