@@ -1,3 +1,11 @@
+var currentDayElement = $('#currentDay');
+
+displayCurrentDay();
+
+function displayCurrentDay() {
+    currentDayElement.text(getCurrentDayString());
+}
+
 function getCurrentDayString() {
     var date = dayjs(); // instantiate date object to current date/time
     var dayString = date.format('dddd, MMMM D'); // formats date in following manner: Thursday, September 5 
