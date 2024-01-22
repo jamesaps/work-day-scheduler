@@ -5,6 +5,8 @@ var endOfWorkDay = dayjs('2000-01-01 17:00');
 
 var schedule = {};
 
+loadSchedule();
+
 displayCurrentDay();
 generateTimeblocks(startOfWorkDay, endOfWorkDay);
 
@@ -121,4 +123,14 @@ function persistScheduleToLocalStorage() {
     var scheduleEncodedAsString = JSON.stringify(schedule);
 
     localStorage.setItem('schedule', scheduleEncodedAsString);
+}
+
+function loadSchedule() {
+    var scheduleFromLocalStorage = localStorage.getItem('schedule');
+
+    if (scheduleFromLocalStorage === null) {
+        return;
+    }
+
+    schedule = JSON.parse(scheduleFromLocalStorage);
 }
