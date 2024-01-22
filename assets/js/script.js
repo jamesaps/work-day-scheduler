@@ -8,7 +8,7 @@ var schedule = {};
 loadSchedule();
 
 displayCurrentDay();
-generateTimeblocks(startOfWorkDay, endOfWorkDay);
+renderTimeblocksContainer(startOfWorkDay, endOfWorkDay);
 
 function displayCurrentDay() {
     currentDayElement.text(getCurrentDayString());
@@ -39,6 +39,22 @@ function getOrdinalSuffix(number) {
     }
 
     return 'th';
+}
+
+function renderTimeblocksContainer(fromTime, toTime) {
+    var container = $('.container');
+    container.html('');
+
+    var clearScheduleButtonContainer = $('<div class="text-center mb-3">');
+    var clearScheduleButtonElement = $('<button type="button" class="btn btn-danger">Clear Schedule</button>');
+
+    clearScheduleButtonElement.on('click', clearSchedule);
+
+    clearScheduleButtonContainer.append(clearScheduleButtonElement);
+
+    container.append(clearScheduleButtonContainer);
+
+    generateTimeblocks(fromTime, toTime);
 }
 
 function generateTimeblocks(fromTime, toTime) {
@@ -146,4 +162,11 @@ function loadSchedule() {
     }
 
     schedule = JSON.parse(scheduleFromLocalStorage);
+}
+
+function clearSchedule() {
+    schedule = {};
+    persistScheduleToLocalStorage();
+
+    renderTimeblocksContainer(startOfWorkDay, endOfWorkDay);
 }
