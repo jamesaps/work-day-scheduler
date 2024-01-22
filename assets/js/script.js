@@ -69,8 +69,10 @@ function createTimeblock(time) {
 
     var timeFormattedAsString = getHourAndDayPeriodFromTime(time);
     hourElement.text(timeFormattedAsString);
-
     row.append(hourElement);
+
+    var tenseOfTimeblock = getTenseOfDateByHour(time);
+    textAreaElement.addClass(tenseOfTimeblock);
     row.append(textAreaElement);
 
     saveButtonElement.append(saveButtonIconElement);
@@ -83,4 +85,21 @@ function getHourAndDayPeriodFromTime(time) {
     // time is a dayjs() object
 
     return time.format('hA');
+}
+
+function getTenseOfDateByHour(time) {
+    var hourToTest = time.hour();
+    var currentHour = dayjs().hour();
+
+    if (hourToTest < currentHour) {
+        return 'past';
+    }
+
+    if (hourToTest === currentHour) {
+        return 'present';
+    }
+
+    if (hourToTest > currentHour) {
+        return 'future';
+    }
 }
