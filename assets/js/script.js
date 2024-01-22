@@ -1,7 +1,7 @@
 var currentDayElement = $('#currentDay');
 
 var startOfWorkDay = dayjs('2000-01-01 09:00');
-var endOfWorkDay = dayjs('2000-01-01 22:00');
+var endOfWorkDay = dayjs('2000-01-01 17:00');
 
 var schedule = {};
 
